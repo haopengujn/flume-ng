@@ -71,3 +71,21 @@ NG 的配置只需要一个配置文件，这个配置文件中存放 source、s
 ```shell
 $ bin/flume-ng agent --conf-file example.conf --name agent_foo -Dflume.root.logger=INFO,console
 ```
+图 5. example.conf
+
+![图五](http://www.ibm.com/developerworks/cn/data/library/bd-1404flumerevolution/5.jpg)
+
+# 公司 flume 升级的可行性分析
+
+## flume ng 整体架构介绍
+
+Flume架构整体上看就是 source-->channel-->sink 的三层架构（参见最上面的 图三），类似生产者和消费者的架构，他们之间通过queue（channel）传输，解耦。
+
+* Source:完成对日志数据的收集，分成 transtion 和 event 打入到channel之中。 
+* Channel:主要提供一个队列的功能，对source提供中的数据进行简单的缓存。 
+* Sink:取出Channel中的数据，进行相应的存储文件系统，数据库，或者提交到远程服务器。 
+
+## flume ng 可能带来的提升
+
+* 解耦合，不再依赖 zookeeper 和 flume master node 。
+
